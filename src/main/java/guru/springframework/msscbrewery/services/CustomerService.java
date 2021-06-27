@@ -1,4 +1,4 @@
-package guru.springframework.msscbrewery.web.controller;
+package guru.springframework.msscbrewery.services;
 
 import guru.springframework.msscbrewery.web.model.CustomerDto;
 

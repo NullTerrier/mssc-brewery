@@ -1,7 +1,9 @@
 package guru.springframework.msscbrewery.web.controller;
 
+import guru.springframework.msscbrewery.services.CustomerService;
 import guru.springframework.msscbrewery.web.model.CustomerDto;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -24,7 +26,9 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<CustomerDto> createCustomer(@RequestBody CustomerDto customerDto) {
         CustomerDto createdUser = service.createCustomer(customerDto);
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+        HttpHeaders header = new HttpHeaders();
+        header.add("Location", "/api/v1/beer/" + createdUser.getUuid());
+        return new ResponseEntity<>(header, HttpStatus.CREATED);
     }
 
     @PutMapping("/{userId}")
