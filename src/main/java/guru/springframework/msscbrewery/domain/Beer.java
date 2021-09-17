@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.util.UUID;
 
 @Data
@@ -17,4 +18,7 @@ public class Beer {
     private String beerName;
     private BeerStyle beerStyle;
     private Long upc;
+
+    private Timestamp creationDate;
+    private Timestamp modificationDate;
 }
