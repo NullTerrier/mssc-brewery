@@ -1,8 +1,6 @@
 package guru.springframework.msscbrewery.web.controller.v2;
 
-import guru.springframework.msscbrewery.services.BeerService;
 import guru.springframework.msscbrewery.services.v2.BeerServiceV2;
-import guru.springframework.msscbrewery.web.model.BeerDto;
 import guru.springframework.msscbrewery.web.model.v2.BeerDtoV2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -56,14 +54,4 @@ public class BeerControllerV2 {
         beerServiceV2.deleteBeer(beerId);
     }
 
-
-    //not working
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<List<String>> handleValidationErrors(ConstraintViolationException error) {
-        List<String> errors = new ArrayList<>(error.getConstraintViolations().size());
-
-        error.getConstraintViolations().forEach(violation -> errors.add(violation.getPropertyPath() + ":" + violation.getMessage()));
-
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
 }

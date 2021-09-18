@@ -36,15 +36,14 @@ class BeerControllerV2Test {
     private BeerServiceV2 beerServiceV2;
 
     private final BeerDtoV2 exampleBeerDto = BeerDtoV2.builder()
-                                                      .id(UUID.randomUUID())
-                                                      .beerName(null)
-                                                      .beerStyle(null)
-                                                      .upc(-1L)
+                                                      .beerName("Beer Name")
+                                                      .beerStyle(BeerStyle.APA)
+                                                      .upc(100L)
                                                       .build();
 
     @Test
     public void testGet() throws Exception {
-        when(beerServiceV2.getBeerById(any(UUID.class))).thenReturn(new BeerDtoV2(UUID.randomUUID(), "A", BeerStyle.APA, 1L));
+        when(beerServiceV2.getBeerById(any(UUID.class))).thenReturn(new BeerDtoV2(UUID.randomUUID(), "A", BeerStyle.APA, 1L, null, null));
 
         mockMvc.perform(get("/api/v2/beer/" + UUID.randomUUID()))
                .andExpect(status().isOk());
@@ -52,7 +51,7 @@ class BeerControllerV2Test {
 
     @Test
     public void testCorrectDto() throws Exception {
-        when(beerServiceV2.createBeer(any(BeerDtoV2.class))).thenReturn(new BeerDtoV2(UUID.randomUUID(), "A", BeerStyle.APA, 1L));
+        when(beerServiceV2.createBeer(any(BeerDtoV2.class))).thenReturn(new BeerDtoV2(UUID.randomUUID(), "A", BeerStyle.APA, 1L, null, null));
 
         String beerDtoJson = mapper.writeValueAsString(exampleBeerDto);
         mockMvc.perform(post("/api/v2/beer/").content(beerDtoJson).contentType(MediaType.APPLICATION_JSON))
@@ -72,10 +71,10 @@ class BeerControllerV2Test {
 
     private static Stream<BeerDtoV2> incorrectDtos() {
         return Stream.of(
-                new BeerDtoV2(UUID.randomUUID(), "Some name", BeerStyle.APA, 100L),
-                new BeerDtoV2(null, null, BeerStyle.APA, 100L),
-                new BeerDtoV2(null, "Some Name", null, 100L),
-                new BeerDtoV2(null, "Some Name", BeerStyle.APA, -1L)
+                new BeerDtoV2(UUID.randomUUID(), "Some name", BeerStyle.APA, 100L, null, null),
+                new BeerDtoV2(null, null, BeerStyle.APA, 100L, null, null),
+                new BeerDtoV2(null, "Some Name", null, 100L, null, null),
+                new BeerDtoV2(null, "Some Name", BeerStyle.APA, -1L, null, null)
         );
     }
 }
