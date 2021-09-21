@@ -62,7 +62,7 @@ class BeerControllerV2Test {
         mockMvc.perform(get("/api/v2/beer/{beerId}", UUID.randomUUID())
                                 .param("iscold", "yes"))
                .andExpect(status().isOk())
-               .andDo(document("/v1/beer",
+               .andDo(document("/v1/beer-get",
                                pathParameters(
                                        parameterWithName("beerId").description("UUID of desired beer to get.")
                                ),
@@ -90,7 +90,7 @@ class BeerControllerV2Test {
         mockMvc.perform(post("/api/v2/beer/").content(beerDtoJson).contentType(MediaType.APPLICATION_JSON))
                .andExpect(status().isCreated())
                .andExpect(header().exists("Location"))
-               .andDo(document("v1/beer",
+               .andDo(document("/v1/beer-post",
                                requestFields(
                                        fields.withPath("id").ignored(),
                                        fields.withPath("beerName").description("Name of Beer"),
